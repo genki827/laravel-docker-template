@@ -8,13 +8,21 @@ use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
+    //プロパティ
+    private $todo;
+
+    //コンストラクタ
+    public function __construct(Todo $todo)
+    {
+        //Todoクラスをインスタンス化
+        $this->todo = $todo;
+    }
+
     //一覧画面表示
     public function index()
     {
-        //Todoクラスをインスタンス化
-        $todo = new Todo();
-        //TodoModelをインスタンス化・todosテーブルの全件取得
-        $todos = $todo->all();
+        //todosテーブルの全件取得
+        $todos = $this->todo->all();
 
         //一覧画面を表示・todosテーブルのレコード情報を渡す
         return view('todo.index', ['todos' => $todos]);
@@ -33,12 +41,10 @@ class TodoController extends Controller
         //Requestのデータを代入
         $inputs = $request->all();
         
-        //Todoクラスをインスタンス化
-        $todo = new Todo();
         //入力した値を代入
-        $todo->fill($inputs);
+        $this->todo->fill($inputs);
         //DBにデータを保存
-        $todo->save();
+        $this->todo->save();
         
         //一覧画面にリダイレクト
         return redirect()->route('todo.index');
@@ -48,11 +54,8 @@ class TodoController extends Controller
     //詳細表示
     public function show($id)
     {
-        //Todoクラスをインスタンス化
-        $model = new Todo();
         //選択した値のidを代入
-        $todo = $model->find($id);
-
+        $todo = $this->todo->find($id);
         //詳細画面を表示
         return view('todo.show', ['todo' => $todo]);
     }
