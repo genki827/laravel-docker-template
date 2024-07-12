@@ -27,7 +27,7 @@ class TodoController extends Controller
         return view('todo.create');
     }
 
-    //新規作成機能
+    //新規作成
     public function store(Request $request)
     {
         //Requestのデータを代入
@@ -43,5 +43,17 @@ class TodoController extends Controller
         //一覧画面にリダイレクト
         return redirect()->route('todo.index');
 
+    }
+
+    //詳細表示
+    public function show($id)
+    {
+        //Todoクラスをインスタンス化
+        $model = new Todo();
+        //選択した値のidを代入
+        $todo = $model->find($id);
+
+        //詳細画面を表示
+        return view('todo.show', ['todo' => $todo]);
     }
 }
