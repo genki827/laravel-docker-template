@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //インポート
 use App\Todo;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class TodoController extends Controller
 {
@@ -60,13 +61,27 @@ class TodoController extends Controller
         return view('todo.show', ['todo' => $todo]);
     }
 
-    //編集機能
+    //編集画面表示
     public function edit($id)
     {
-        //idを代入
+        //idを代入・データを取得
         $todo = $this->todo->find($id);
 
         //編集画面
         return view('todo.edit' , ['todo' => $todo]);
+    }
+
+    //編集機能(更新)
+    public function update(Request $request, $id)
+    {
+        //入力されたデータを取得
+        $inputs = $request->all();
+        //更新対象のデータを取得
+        $todo = $this->todo->find($id);
+        //更新するデータの代入・UPDATE文の実行
+        $todo->fill($inputs)->save();
+
+        //編集画面表示
+        return redirect()->route('todo.show', $todo->id);
     }
 }
