@@ -59,4 +59,14 @@ class TodoController extends Controller
         //詳細画面を表示
         return view('todo.show', ['todo' => $todo]);
     }
+
+    //編集機能
+    public function edit($id)
+    {
+        //idを代入
+        $todo = $this->todo->find($id);
+
+        //編集画面
+        return view('todo.edit' , ['todo' => $todo]);
+    }
 }
