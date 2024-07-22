@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 //インポート
 use App\Todo;
-use Illuminate\Http\Request;
+use App\Http\Requests\TodoRequest;
 use Symfony\Component\Console\Input\Input;
 
 class TodoController extends Controller
@@ -37,7 +37,7 @@ class TodoController extends Controller
     }
 
     //新規作成
-    public function store(Request $request)
+    public function store(TodoRequest $request)
     {
         //Requestのデータを代入
         $inputs = $request->all();
@@ -72,7 +72,7 @@ class TodoController extends Controller
     }
 
     //編集機能(更新)
-    public function update(Request $request, $id)
+    public function update(TodoRequest $request, $id)
     {
         //入力されたデータを取得
         $inputs = $request->all();
