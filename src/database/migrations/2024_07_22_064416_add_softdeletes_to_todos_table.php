@@ -13,6 +13,7 @@ class AddSoftdeletesToTodosTable extends Migration
      */
     public function up()
     {
+        //ソフトデリート用のスキーマ
         Schema::table('todos', function (Blueprint $table) {
             $table->softDeletes();
         });
@@ -25,6 +26,7 @@ class AddSoftdeletesToTodosTable extends Migration
      */
     public function down()
     {
+        //論理削除したデータの取得を回避するスキーマ
         Schema::table('todos', function (Blueprint $table) {
             $table->dropSoftDeletes();
         });
